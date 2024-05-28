@@ -43,5 +43,5 @@ workflow NEGEDIA {
 }
 
 workflow {
-    NEEGDIA()
+    NEGEDIA()
 }
