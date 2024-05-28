@@ -5,7 +5,7 @@ idx_ch   = Channel.fromPath( params.idx )
 
 process VEP {
     debug true
-    tag "$sample_id"
+    tag "Bicienzo"
     container 'europe-west1-docker.pkg.dev/ngdx-nextflow/wes/vep:rxxx'
     publishDir "$params.outdir" , mode: 'copy',
     saveAs: {filename ->
