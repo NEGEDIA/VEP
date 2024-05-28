@@ -1,6 +1,7 @@
 nextflow.enable.dsl = 2
 
 input_ch = Channel.fromPath( params.input )
+idx_ch   = Channel.fromPath( params.idx )
 
 process VEP {
     debug true
@@ -13,21 +14,31 @@ process VEP {
 
     input:
     path(vcf)
+    path(idx_ch)
 
     output:
     path("*maf")
 
 
     script:
+    def vcf2maf = "/opt/vcf2maf/vcf2maf_mod.pl"
+    def vep = "/opt/ensembl-vep/"
     """
-    perl $vcf2maf --input-vcf !{idSample}_DNAhaplotyper2.vcf --output-maf !{idSample}.maf --vep-path $vep --ncbi-build $build --tumor-id !{idSample} --vcf-tumor-id !{idSample} --ref-fasta !{genome}/*.fna
+    perl $vcf2maf \
+        --input-vcf $vcf \
+        --output-maf Bicienzo.maf \
+        --vep-path $vep \
+        --ncbi-build GRCh38 \
+        --tumor-id Bicienzo \
+        --vcf-tumor-id Bicienzo \
+        --ref-fasta ${idx_ch}/*.fna
     """
 
 }
 
 workflow NEGEDIA {
 
-    VEP( input_ch )
+    VEP( input_ch, idx_ch )
 
 }
 
