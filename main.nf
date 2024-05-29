@@ -22,7 +22,7 @@ process VEP {
 
 
     script:
-    def vcf2maf = "/opt/vcf2maf/vcf2maf_mod.pl"
+    def vcf2maf = "/opt/vcf2maf/vcf2maf_v111.pl"
     def vep = "/opt/ensembl-vep/"
     """
     perl $vcf2maf \
